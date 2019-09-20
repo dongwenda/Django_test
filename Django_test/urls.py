@@ -30,9 +30,21 @@ urlpatterns = [
     url(r'^article/(?P<year>[0-9]{4})/$', views.article),
     url(r'^now/$', views.now_use_file),
 
+    url(r'^print_request/$', views.print_request, name='print_request'),
+    url(r'^print_json/$', views.print_json, name='print_json'),
+    url(r'^print_resp/$', views.print_resp, name='print_resp'),
+    url(r'^print_image/$', views.print_image, name='print_image'),
+    url(r'^print_xls/$', views.print_xls, name='print_xls'),
+
+    # 模版视图
+    url(r'^tmpl_view/$', views.ShowClassView.as_view(), name='tmpl_view'),
+
     # 重定向的实验
     url(r'^index1/$', views.index_one, name='i1'),
-    url(r'^index2/$', views.index_two, name='i2')
+    url(r'^index2/$', views.index_two, name='i2'),
+
+    # 模版引擎选择
+    url(r'^templ/show/$', views.templ_show, name='templ_show')
 ]
 
 

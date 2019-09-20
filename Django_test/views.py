@@ -9,6 +9,7 @@ from django.shortcuts import redirect, reverse
 
 
 
+
 def now_time(request):
     '''返回html模版'''
     now = datetime.now()
@@ -63,6 +64,59 @@ def now_use_file(request):
     })
 
 
+def print_json(request):
+    '''响应json对象'''
+    user_info = {
+        "username": 'apple',
+        'age': 18
+    }
+    # import json
+    # user_info = json.dumps(user_info)
+    # return HttpResponse(user_info, content_type='application/json')
+
+    from django.http import JsonResponse
+    return JsonResponse(user_info)
+
+
+def print_request(request):
+    '''请求头信息'''
+    print(request)
+    print(request.META['REMOTE_ADDR'])  # 获取访问的ip
+    print(request.META['HTTP_USER_AGENT'])  # UA
+    print('----------------------')
+    print(dir(request))
+    return HttpResponse()
+
+
+def print_resp(request):
+    '''响应对象'''
+    resp = HttpResponse('响应对象', status=404) # 设置http响应码
+    resp.status_code = 204 # 设置http响应码
+    print(resp.status_code)
+    return resp
+
+
+def print_image(request):
+    '''打印图片'''
+    from django.http import FileResponse
+    file_path = os.path.join(settings.BASE_DIR, 'medias/images/aapp.png')
+    f = open(file_path, 'rb')
+    return FileResponse(f, content_type='image/png')
+
+def print_xls(request):
+    '''下载xls'''
+    from django.http import FileResponse
+    file_path = os.path.join(settings.BASE_DIR, 'medias/test.xls')
+    f = open(file_path, 'rb')
+    return FileResponse(f, content_type='application/vnd.ms-excel')
+
+
+from django.views.generic import TemplateView
+class ShowClassView(TemplateView):
+    """class 视图"""
+    template_name = 'show_class.html'
+
+
 # 重定向
 def index_one(request):
     #return HttpResponse('index one')
@@ -74,7 +128,9 @@ def index_one(request):
 def index_two(request):
     return HttpResponse('index two')
 
-
+def templ_show(request):
+    # 模版引擎选择
+    return render_to_response('detail.html')
 
 # 重写内置视图
 def page_500(request):

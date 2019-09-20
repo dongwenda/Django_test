@@ -56,6 +56,22 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')]
         ,
+        'APP_DIRS': True,   # 这里设置为True时，当根目录模版找不到时，就会去app下面的模版目录找
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+# jinja2 模版引擎添加
+# 查找模版的顺序，按照列表顺序，根目录 > App里面的目录
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [os.path.join(BASE_DIR, 'jinja2')]
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
